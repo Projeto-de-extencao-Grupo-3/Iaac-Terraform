@@ -1,5 +1,4 @@
-# Grupos de segurança
-
+# SECURITY GROUPS
 resource "aws_security_group" "frontend_sg" {
   name   = "frontend-sg"
   vpc_id = aws_vpc.grotrack_vpc.id
@@ -15,8 +14,8 @@ resource "aws_security_group" "db_sg" {
   vpc_id = aws_vpc.grotrack_vpc.id
 }
 
+# FRONTEND - HTTP / HTTPS
 
-# HTTP/HTTPS
 resource "aws_security_group_rule" "frontend_http" {
   type              = "ingress"
   from_port         = 80
@@ -35,8 +34,7 @@ resource "aws_security_group_rule" "frontend_https" {
   security_group_id = aws_security_group.frontend_sg.id
 }
 
-
-# frontend -> backend
+# FRONTEND -> BACKEND (8080)
 
 resource "aws_security_group_rule" "frontend_to_backend" {
   type                     = "egress"
@@ -56,7 +54,7 @@ resource "aws_security_group_rule" "backend_from_frontend" {
   source_security_group_id = aws_security_group.frontend_sg.id
 }
 
-# backend -> baco de dados
+# BACKEND -> DB (3306)
 
 resource "aws_security_group_rule" "backend_to_db" {
   type                     = "egress"
@@ -76,8 +74,9 @@ resource "aws_security_group_rule" "db_from_backend" {
   source_security_group_id = aws_security_group.backend_sg.id
 }
 
+# SSH INTERNO ENTRE TODAS
 
-# ssh
+# INGRESS SSH
 
 resource "aws_security_group_rule" "ssh_internal_front" {
   type              = "ingress"
@@ -86,4 +85,80 @@ resource "aws_security_group_rule" "ssh_internal_front" {
   protocol          = "tcp"
   cidr_blocks       = ["10.0.0.0/24"]
   security_group_id = aws_security_group.frontend_sg.id
+}
+
+resource "aws_security_group_rule" "ssh_internal_backend" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["10.0.0.0/24"]
+  security_group_id = aws_security_group.backend_sg.id
+}
+
+resource "aws_security_group_rule" "ssh_internal_db" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["10.0.0.0/24"]
+  security_group_id = aws_security_group.db_sg.id
+}
+
+# EGRESS SSH (BUG AWS FIX)
+
+resource "aws_security_group_rule" "ssh_egress_front" {
+  type              = "egress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["10.0.0.0/24"]
+  security_group_id = aws_security_group.frontend_sg.id
+}
+
+resource "aws_security_group_rule" "ssh_egress_backend" {
+  type              = "egress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["10.0.0.0/24"]
+  security_group_id = aws_security_group.backend_sg.id
+}
+
+resource "aws_security_group_rule" "ssh_egress_db" {
+  type              = "egress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["10.0.0.0/24"]
+  security_group_id = aws_security_group.db_sg.id
+}
+
+# SAÍDA PARA INTERNET
+
+resource "aws_security_group_rule" "frontend_egress_all" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.frontend_sg.id
+}
+
+resource "aws_security_group_rule" "backend_egress_all" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.backend_sg.id
+}
+
+resource "aws_security_group_rule" "db_egress_all" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.db_sg.id
 }
