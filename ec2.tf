@@ -1,20 +1,8 @@
-# Ubuntu AMI
-
-data "aws_ami" "ubuntu" {
-  most_recent = true
-  owners      = ["099720109477"]
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-*-amd64-server-*"]
-  }
-}
-
 # FRONTEND 1 (ZB)
 
 resource "aws_instance" "frontend_1" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
+  ami                    = "ami-0b6c6ebed2801a5cb"
+  instance_type          = "t3.micro"
   subnet_id              = aws_subnet.public_zb.id
   private_ip             = "10.0.0.50"
   vpc_security_group_ids = [aws_security_group.frontend_sg.id]
@@ -26,8 +14,8 @@ resource "aws_instance" "frontend_1" {
 # FRONTEND 2 (ZC)
 
 resource "aws_instance" "frontend_2" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
+  ami                    = "ami-0b6c6ebed2801a5cb"
+  instance_type          = "t3.micro"
   subnet_id              = aws_subnet.public_zc.id
   private_ip             = "10.0.0.66"
   vpc_security_group_ids = [aws_security_group.frontend_sg.id]
@@ -39,8 +27,8 @@ resource "aws_instance" "frontend_2" {
 # BACKEND (ZA)
 
 resource "aws_instance" "backend" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
+  ami                    = "ami-0b6c6ebed2801a5cb"
+  instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_za.id
   private_ip             = "10.0.0.5"
   vpc_security_group_ids = [aws_security_group.backend_sg.id]
@@ -52,8 +40,8 @@ resource "aws_instance" "backend" {
 # DB (ZA)
 
 resource "aws_instance" "db" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
+  ami                    = "ami-0b6c6ebed2801a5cb"
+  instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_za.id
   private_ip             = "10.0.0.6"
   vpc_security_group_ids = [aws_security_group.db_sg.id]
@@ -65,8 +53,8 @@ resource "aws_instance" "db" {
 # TERCEIRA PRIVADA (ZA)
 
 resource "aws_instance" "private_extra" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
+  ami                    = "ami-0b6c6ebed2801a5cb"
+  instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_za.id
   private_ip             = "10.0.0.7"
   vpc_security_group_ids = [aws_security_group.backend_sg.id]

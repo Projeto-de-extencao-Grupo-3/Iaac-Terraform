@@ -19,9 +19,9 @@ Envia a chave pública (.pub) para a AWS.
 
 - Portas abertas
 
-- Regras de entrada (ingress)
+- Regras de entrada
 
-- Regras de saída (egress)
+- Regras de saída
 
 - Comunicação entre frontend, backend e banco
 
