@@ -20,6 +20,6 @@ crash.*.log
 # Aquivos de lock
 .terraform.lock.*
 
-#chaves SSH
-.pem
-.pub
+# #chaves SSH
+# .pem
+# .pub

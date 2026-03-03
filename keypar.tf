@@ -1,4 +1,4 @@
 resource "aws_key_pair" "grotrack_key" {
-  key_name   = "mysshkeyso"
-  public_key = file("mysshkeyso.pem")
+  key_name   = "key-grotrack"
+  public_key = file("key-grotrack.pem")
 }
