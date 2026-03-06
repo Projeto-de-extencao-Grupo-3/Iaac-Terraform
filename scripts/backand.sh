@@ -33,3 +33,9 @@ sudo systemctl start docker
 sudo usermod -aG docker ubuntu
 
 echo "Script rodou a instalação do docker"
+
+# aguardar docker iniciar
+sleep 20
+
+# subir container
+docker run -d -p 80:80 --name gabrielpacificooo/grotrack:back-end
