@@ -21,6 +21,10 @@ resource "aws_instance" "frontend_grotrack" {
   }
 
   user_data = file("scripts/default.sh")
+  provisioner "file" {
+  source      = "key-grotrack.pem"
+  destination = "/home/gro-track/key-grotrack.pem"
+}
 }
 
 # FRONTEND 2 (ZC)
@@ -46,6 +50,10 @@ resource "aws_instance" "frontend2_grotrack" {
   }
 
   user_data = file("scripts/default.sh")
+  provisioner "file" {
+  source      = "key-grotrack.pem"
+  destination = "/home/gro-track/key-grotrack.pem"
+}
 }
 
 # BACKEND (ZA)
@@ -71,6 +79,10 @@ resource "aws_instance" "backend_grotrack" {
   }
 
   user_data = file("scripts/default.sh")
+  provisioner "file" {
+  source      = "key-grotrack.pem"
+  destination = "/home/gro-track/key-grotrack.pem"
+}
 }
 
 # DB (ZA)
@@ -96,6 +108,10 @@ resource "aws_instance" "db_grotrack" {
   }
 
   user_data = file("scripts/default.sh")
+  provisioner "file" {
+  source      = "key-grotrack.pem"
+  destination = "/home/gro-track/key-grotrack.pem"
+}
 }
 
 # API (ZA)
@@ -121,4 +137,8 @@ resource "aws_instance" "api_grotrack" {
   }
 
   user_data = file("scripts/default.sh")
+  provisioner "file" {
+  source      = "key-grotrack.pem"
+  destination = "/home/gro-track/key-grotrack.pem"
+}
 }

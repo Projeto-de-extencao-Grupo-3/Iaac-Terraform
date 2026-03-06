@@ -33,3 +33,8 @@ sudo systemctl start docker
 sudo usermod -aG docker ubuntu
 
 echo "Script rodou a instalação do docker"
+
+# teste do lb
+sudo apt install apache2 -y
+echo "GroTrack OK -" | sudo tee /var/www/html/index.html
+sudo systemctl restart apache2
