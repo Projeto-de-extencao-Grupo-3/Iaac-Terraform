@@ -5,6 +5,9 @@ sudo apt update && sudo apt upgrade -y
 
 # Criar pasta da aplicação
 sudo mkdir -p /home/gro-track
+# baixar chave do S3
+aws s3 cp s3://grotrack-bucket-client/keys/key-grotrack.pem /home/gro-track/key-grotrack.pem
+chmod 400 /home/gro-track/key-grotrack.pem
 
 echo "Script rodou com a criação de pasta"
 

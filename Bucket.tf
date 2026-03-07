@@ -24,3 +24,19 @@ resource "aws_s3_bucket" "grotrack_bucket_client" {
     Environment = "test"
   }
 }
+
+resource "aws_s3_object" "client_csv_upload" {
+  bucket = aws_s3_bucket.grotrack_bucket_client.id
+  key    = "analise/feriados_tratados.csv"
+  source = "analise/feriados_completo.csv"
+
+  etag = filemd5("analise/feriados_completo.csv")
+}
+
+resource "aws_s3_object" "pem_upload" {
+  bucket = aws_s3_bucket.grotrack_bucket_client.bucket
+  key    = "keys/key-grotrack.pem"
+  source = "key-grotrack.pem"
+
+  etag = filemd5("key-grotrack.pem")
+}
