@@ -39,5 +39,69 @@ echo "Script rodou a instalação do docker"
 
 # teste do lb
 sudo apt install apache2 -y
-echo "GroTrack OK -" | sudo tee /var/www/html/index.html
+sudo tee /var/www/html/index.html > /dev/null <<'EOF'
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>GroTrack</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+}
+
+.container{
+    text-align:center;
+    background: rgba(0,0,0,0.5);
+    padding:50px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+h1{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.status{
+    font-size:20px;
+    margin-top:20px;
+    color:#00ff9c;
+}
+
+.footer{
+    margin-top:30px;
+    font-size:14px;
+    opacity:0.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🚀 GroTrack</h1>
+    <h2>Sistema Online</h2>
+
+    <div class="status">
+        ✅ Load Balancer funcionando
+    </div>
+
+    <div class="footer">
+        Infraestrutura AWS | Terraform
+    </div>
+</div>
+
+</body>
+</html>
+EOF
+
 sudo systemctl restart apache2
